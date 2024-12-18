@@ -72,7 +72,6 @@ class ProjectPath:
         self._server = self._package / "server"
         self._export = self._root / "export"
 
-
     @property
     def root(self) -> pathlib.Path:
         """Root directory Path instance."""
