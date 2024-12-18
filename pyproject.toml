@@ -3,7 +3,7 @@ name = "picoproject"
 description = "CLI library for MicroPython AWS IoT projects."
 authors = [{name = "Andrew Ridyard", email = "ridyard12@gmail.com"}]
 maintainers = [{name = "Andrew Ridyard", email = "ridyard12@gmail.com"}]
-version = "0.0.0"
+version = "0.0.1"
 license = {file = "LICENSE"}
 readme = {file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.10"
@@ -90,8 +90,8 @@ filename = "src/picoproject/__init__.py"
 
 [[tool.bumpversion.files]]
 filename = "pyproject.toml"
-search = "version = {current_version}"
-replace = "version = {new_version}"
+search = "version = '{current_version}'"
+replace = "version = '{new_version}'"
 
 
 [build-system]
