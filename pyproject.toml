@@ -76,7 +76,7 @@ tmp_path_retention_policy = "failed"
 packages = ["src/picoproject"]
 
 [tool.bumpversion]
-current_version = "0.0.1"
+current_version = "0.0.0"
 commit = true
 commit_args = "--no-verify"
 tag = true
@@ -84,6 +84,15 @@ tag_name = "v{new_version}"
 tag_message = "chore: tag version update {current_version} -> {new_version}."
 allow_dirty = false
 message = "chore: version update {current_version} -> {new_version}."
+
+[[tool.bumpversion.files]]
+filename = "src/picoproject/__init__.py"
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = "version = {current_version}"
+replace = "version = {new_version}"
+
 
 [build-system]
 requires = ["hatchling"]
