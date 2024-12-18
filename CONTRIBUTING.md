@@ -1,13 +1,13 @@
-# Contributing to picoproject
+# Contribution Guidelines
 
 All contributions are welcomed and appreciated.
 
 ## Raising Issues
 
-A good bug report shouldn't leave any ambiguity as to how an issue/bug presents itself. Please describe the issue in detail in your report. Please complete the following steps in advance to help us fix any potential bug as fast as possible.
+A good bug report shouldn't leave any ambiguity as to how an issue/bug presents itself. Please describe the issue in detail in your report. Please complete the following steps in advance to help me fix any potential bugs/errors as fast as possible.
 
 1. Check the version you are using.
-2. Check the documentation for an issue related information.
+2. Check the documentation for any issue related information.
 3. Check the existing repository issue to prevent duplication of effort.
 4. Collate information about the bug:
     1. Traceback details.
@@ -65,6 +65,22 @@ Install the project dependencies in editable mode with its optional dependencies
 
     ```sh
     python -m pip install -e .[dev]
+    ```
+
+### Linting & Formatting
+
+With the virtual environment activated the ruff check & format commands will implement the rules set in the pyproject.toml file. These tool can be also be run using the commands `uv run ruff check` or `uv run ruff format`.
+
+To run the ruff linting tool, use the following command:
+
+    ```sh
+    (.venv) ruff check
+    ```
+
+To format the code in accordance with the project formatting rules, use the following command:
+
+    ```sh
+    (.venv) ruff format
     ```
 
 ### Commit Messages
