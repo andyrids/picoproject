@@ -3,6 +3,14 @@
 >[!NOTE]
 > This project is a WIP.
 
+## TODO List
+
+1. Update CLI command documentation.
+2. Add CLI format command (mpremote).
+3. Add --directory option to CLI export command.
+4. Add CLI transfer command (mpremote).
+5. Add extra unit tests.
+
 ## Introduction
 
 This package was designed to facilitate MicroPython project management for the Raspberry Pi Pico W. Currently the following functionality is implemented:
