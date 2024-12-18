@@ -3,7 +3,7 @@ name = "picoproject"
 description = "CLI library for MicroPython AWS IoT projects."
 authors = [{name = "Andrew Ridyard", email = "ridyard12@gmail.com"}]
 maintainers = [{name = "Andrew Ridyard", email = "ridyard12@gmail.com"}]
-version = "0.0.2"
+version = "0.0.3"
 license = {file = "LICENSE"}
 readme = {file = "README.md", content-type = "text/markdown"}
 requires-python = ">=3.10"
@@ -76,7 +76,7 @@ tmp_path_retention_policy = "failed"
 packages = ["src/picoproject"]
 
 [tool.bumpversion]
-current_version = "0.0.2"
+current_version = "0.0.3"
 commit = true
 commit_args = "--no-verify"
 tag = true
