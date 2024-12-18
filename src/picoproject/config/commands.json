@@ -1,0 +1,19 @@
+{
+    "typer": {
+        "help": "[b yellow]Command Line Interface[/b yellow] for managing Raspberry Pi Pico W MicroPython projects for use as [b]AWS IoT Core[/b] '[i]things[/i]'.",
+        "no_args_is_help": true,
+        "rich_markup_mode": "rich"
+    },
+    "install": {
+        "no_args_is_help": true,
+        "rich_help_panel": "Package Management"
+    },
+    "compile": {
+        "no_args_is_help": false,
+        "rich_help_panel": "Compilation"
+    },
+    "export": {
+        "no_args_is_help": false,
+        "rich_help_panel": "Distribution"
+    }
+}
