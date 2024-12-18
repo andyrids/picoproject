@@ -50,15 +50,6 @@ This CLI expects a 'flat' or 'src' layout in order to identify project paths. A 
 
 ## Installation
 
-**uv** is used as the Python package manager. To install **uv** see the installation
-guide @ [uv documentation](https://docs.astral.sh/uv/getting-started/installation/).
-
-Installing the package with uv:
-
-    ```sh
-    uv add git+https://github.com/andyrids/picoproject
-    ```
-
 Activate your project virtual environment:
 
     ```sh
