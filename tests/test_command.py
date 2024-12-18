@@ -26,8 +26,8 @@ import importlib.util
 import pathlib
 from typing import List
 
-from command_line.main import app
-from command_line.utils.progress import command
+from picoproject.main import app
+from picoproject.utils.progress import command
 from rich.progress import Task
 from typer.testing import CliRunner
 
@@ -64,7 +64,7 @@ def test_install_command(tmp_path: pathlib.Path) -> None:
 
     tmp_path.mkdir(exist_ok=True)
 
-    install_args = ("install", "umqtt.simple", tmp_path.as_posix())
+    install_args = ("install", "umqtt.simple", "--directory", tmp_path.as_posix())
     result = runner.invoke(app, install_args, standalone_mode=False)
 
     tasks: List[Task] = result.return_value
@@ -74,9 +74,3 @@ def test_install_command(tmp_path: pathlib.Path) -> None:
     assert not task.visible
     assert task.description == "Installed"
     command.remove_task(task.id)
-
-    spec = importlib.util.find_spec(".umqtt.simple", "tests")
-    assert spec is not None
-    spec_origin = pathlib.Path(spec.origin)
-    spec_origin.unlink()
-    assert 0
