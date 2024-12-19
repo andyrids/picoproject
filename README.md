@@ -60,33 +60,33 @@ This CLI expects a 'flat' or 'src' layout in order to identify project paths. A 
 
 Activate your project virtual environment:
 
-    ```sh
+```sh
     source .venv/bin/activate
-    ```
+```
 
 If installing with pip instead of uv:
 
-    ```sh
+```sh
     (project) python -m pip install git+https://github.com/andyrids/picoproject.git
-    ```
+```
 
 This project has defined a CLI script in the `[project.scripts]` table of pyproject.toml, resulting in the ability to run the CLI with the following command:
 
-    ```sh
+```sh
     (project) uv run CLI
-    ```
+```
 
 You can run the CLI as a module:
 
-    ```sh
+```sh
     (project) python -m picoproject.main
-    ```
+```
 
 You can use the command 'CLI' in an activated .venv:
 
-    ```sh
+```sh
     (project) CLI
-    ```
+```
 
 ## CLI Commands
 
@@ -100,9 +100,9 @@ The CLI navigates the MicroPython package index to install the chosen packages. 
 the project's local `lib/` directory instead of a microcontroller device. This facilitates IDE autocompletion
 and parsing of docstring information whilst developing locally.
 
-    ```sh
+```sh
     (project) CLI install --help
-    ```
+```
 ![CLI install --help](./docs/img/PICOPROJECT_INSTALL_HELP.png)
 
 >[!NOTE]
@@ -112,9 +112,9 @@ and parsing of docstring information whilst developing locally.
 
 It is possible to specify the install directory using the '--directory' option. The following command would install the `umqtt.simple` package to the current working directory:
 
-    ```sh
+```sh
     (project) CLI install umqtt.simple --directory .
-    ```
+```
 ![CLI install](./docs/img/PICOPROJECT_INSTALL_DIR.png)
 
 If the project does not have a 'lib/' directory and a --directory option path is not specified, then the install command will fail. The error message will indicate a missing expected 'lib/' path in relation to the project's root directory.
@@ -123,15 +123,15 @@ If the project does not have a 'lib/' directory and a --directory option path is
 
 The CLI uses the `mpy-cross` package to compile Python to MicroPython precompiled binary (.mpy).
 
-    ```sh
+```sh
     (project) CLI compile --help
-    ```
+```
 
 By default, all Python files will be compiled on issuing the CLI **compile** command:
 
-    ```sh
+```sh
     (project) CLI compile
-    ```
+```
 
 ## CLI export
 
@@ -140,16 +140,16 @@ to this directory. By default all files are exported, but a precompiled only opt
 of only precompiled binary files (.mpy). Any Python files not previously precompiled are compiled and
 exported automatically.
 
-    ```sh
+```sh
     (project) CLI export --help
-    ```
+```
 
 To export all Python and MicroPython precompiled files, run the **export** command without the `--compiled-only`
 option.
 
-    ```sh
+```sh
     (project) CLI export
-    ```
+```
 
 Directory trees are displayed for the main project and export directories for comparison.
 
