@@ -27,7 +27,7 @@ This CLI expects a 'flat' or 'src' layout in order to identify project paths. A 
 
 ### Flat Layout Example
 
-    ```text
+```text
     project-name
     ├── .picoproject     <-- Optional CLI root directory marker & config
     ├── project_name
@@ -36,7 +36,7 @@ This CLI expects a 'flat' or 'src' layout in order to identify project paths. A 
     ├── LICENSE
     ├── pyproject.toml
     └── README.md
-    ```
+```
 
 ### Src Layout Example
 
