@@ -6,7 +6,7 @@
 ## TODO
 
 * Add CLI format command (mpremote).
-* Add --directory option to CLI export command.
+* Add **--directory** option to CLI export command.
 * Add CLI transfer command (mpremote).
 * Add extra unit tests.
 
@@ -110,7 +110,7 @@ and parsing of docstring information whilst developing locally.
 
 ![CLI install](./docs/img/PICOPROJECT_INSTALL.png)
 
-It is possible to specify the install directory using the '--directory' option. The following command would install the `umqtt.simple` package to the current working directory:
+It is possible to specify the install directory using the **--directory** option. The following command would install the *umqtt.simple* package to the current working directory:
 
 ```bash
 (project) CLI install umqtt.simple --directory .
@@ -118,11 +118,11 @@ It is possible to specify the install directory using the '--directory' option. 
 
 ![CLI install](./docs/img/PICOPROJECT_INSTALL_DIR.png)
 
-If the project does not have a 'lib/' directory and a --directory option path is not specified, then the install command will fail. The error message will indicate a missing expected 'lib/' path in relation to the project's root directory.
+If the project does not have a 'lib/' directory and a **--directory** option path is not specified, then the install command will fail. The error message will indicate a missing expected 'lib/' path in relation to the project's root directory.
 
 ### CLI compile
 
-The CLI uses the `mpy-cross` package to compile Python to MicroPython precompiled binary (.mpy).
+The CLI uses the *mpy-cross* package to compile Python to MicroPython precompiled binary (.mpy).
 
 ```bash
 (project) CLI compile --help
@@ -138,14 +138,14 @@ By default, all Python files will be compiled on issuing the CLI **compile** com
 
 The CLI creates an `export/` directory within the project root folder, and exports all project files
 to this directory. By default all files are exported, but a precompiled only option causes the export
-of only precompiled binary files (.mpy). Any Python files not previously precompiled are compiled and
+of only precompiled binary files. Any Python files not previously precompiled are compiled and
 exported automatically.
 
 ```bash
 (project) CLI export --help
 ```
 
-To export all Python and MicroPython precompiled files, run the **export** command without the `--compiled-only`
+To export all Python and MicroPython precompiled files, run the **export** command without the **--compiled-only**
 option.
 
 ```bash

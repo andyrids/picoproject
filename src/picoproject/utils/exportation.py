@@ -27,7 +27,7 @@ def build_directory_tree(
     directory = operator.methodcaller("is_dir")
     python_file = operator.methodcaller("match", "*.py")
     cpython_file = operator.methodcaller("match", "*.pyc")
-    
+
     sorted_paths = sorted(path.iterdir(), key=lambda x: f"{x.is_file()}{x}")
     for item in sorted_paths:
         if directory(item):

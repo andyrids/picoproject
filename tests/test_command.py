@@ -23,13 +23,17 @@ Functions:
 """
 
 import importlib.util
+import operator
 import pathlib
+import shutil
 from typing import List
+
+from rich.progress import Task
+from typer.testing import CliRunner
 
 from picoproject.main import app
 from picoproject.utils.progress import command
-from rich.progress import Task
-from typer.testing import CliRunner
+from picoproject.utils.project import ProjectPath
 
 runner = CliRunner()
 
@@ -40,8 +44,8 @@ def test_compile_command():
     target = pathlib.Path(__file__)
     compiled_target = target.with_suffix(".mpy")
 
-    compile_args = ("compile", (target,))
-    result = runner.invoke(app, compile_args, standalone_mode=False)
+    args = ("compile", (target,))
+    result = runner.invoke(app, args, standalone_mode=False)
 
     # Result properties
     # exc_info, exception, exit_code output, return_value
@@ -64,13 +68,54 @@ def test_install_command(tmp_path: pathlib.Path) -> None:
 
     tmp_path.mkdir(exist_ok=True)
 
-    install_args = ("install", "umqtt.simple", "--directory", tmp_path.as_posix())
-    result = runner.invoke(app, install_args, standalone_mode=False)
+    args = ("install", "umqtt.simple", "--directory", tmp_path.as_posix())
+    result = runner.invoke(app, args, standalone_mode=False)
 
     tasks: List[Task] = result.return_value
-
     task, *_ = tasks
     assert task.finished
     assert not task.visible
     assert task.description == "Installed"
     command.remove_task(task.id)
+
+    # umqtt.simple23 not found in MicroPython Index
+    args = ("install", "umqtt.simple23", "--directory", tmp_path.as_posix())
+    result = runner.invoke(app, args, standalone_mode=False)
+
+    tasks: List[Task] = result.return_value
+    task, *_ = tasks
+    assert not task.finished
+    assert task.visible
+    assert task.description == "Error"
+    command.remove_task(task.id)
+
+    # base64 in MicroPython standard library
+    args = ("install", "base64", "--directory", tmp_path.as_posix())
+    result = runner.invoke(app, args, standalone_mode=False)
+
+    tasks: List[Task] = result.return_value
+    task, *_ = tasks
+    assert not task.finished
+    assert task.visible
+    assert task.description == "Error"
+    command.remove_task(task.id)
+
+
+def test_export_command() -> None:
+    """Test Typer CLI export command."""
+    args = ("export",)
+    result = runner.invoke(app, args, standalone_mode=False)
+    tasks: List[Task] = result.return_value
+
+    visible = operator.attrgetter("visible")
+    assert not any(map(visible, tasks))
+
+    project = ProjectPath()
+    export_paths = tuple(project.export / i.fields["item"] for i in tasks)
+    is_file = operator.methodcaller("is_file")
+    assert all(map(is_file, export_paths))
+
+    shutil.rmtree(project.export)
+
+    for task in tasks:
+        command.remove_task(task.id)
