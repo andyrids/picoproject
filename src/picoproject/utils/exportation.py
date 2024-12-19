@@ -26,16 +26,20 @@ def build_directory_tree(
     """
     directory = operator.methodcaller("is_dir")
     python_file = operator.methodcaller("match", "*.py")
-
-    sorted_paths = sorted(path.iterdir(), key=lambda x: x.is_file())
+    cpython_file = operator.methodcaller("match", "*.pyc")
+    
+    sorted_paths = sorted(path.iterdir(), key=lambda x: f"{x.is_file()}{x}")
     for item in sorted_paths:
         if directory(item):
-            branch = tree.add(f"[b bright_cyan]{item.name}")
+            branch_name = Text(f"{item.name}", "b bright_cyan")
+            if item.stem == "__pycache__":
+                branch_name.stylize("dim")
+            branch = tree.add(branch_name)
             build_directory_tree(item, branch, precompiled)
         else:
             icon = "🐍" if python_file(item) else "📄"
             item_name = Text(f"{item.name}", "gray100")
-            if precompiled and python_file(item):
+            if precompiled and python_file(item) or cpython_file(item):
                 item_name.stylize("red strike")
             else:
                 if item.stem == "__init__":

@@ -30,6 +30,7 @@ import operator
 import pathlib
 import subprocess
 import time
+from itertools import filterfalse
 from typing import List, Optional
 from urllib.error import URLError
 
@@ -191,7 +192,8 @@ def export(
     """[b green]Export[/b green] project files for distribution."""
 
     project = ProjectPath()
-    exports = sorted(project.package.rglob("*.*"))
+    exports = project.package.rglob("*.*")
+    exports = sorted(filterfalse(lambda x: x.match("*.pyc"), exports))
 
     with contextlib.ExitStack() as cm:
         update_commands = False
@@ -210,6 +212,7 @@ def export(
         except FileExistsError:
             pass
 
+        cpython_file = operator.methodcaller("match", "*.pyc")
         python_file = operator.methodcaller("match", "*.py")
         micropython_version = operator.methodcaller("with_suffix", ".mpy")
 

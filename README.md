@@ -3,13 +3,13 @@
 >[!NOTE]
 > This project is a WIP.
 
-## TODO List
+## TODO
 
-1. Update CLI command documentation.
-2. Add CLI format command (mpremote).
-3. Add --directory option to CLI export command.
-4. Add CLI transfer command (mpremote).
-5. Add extra unit tests.
+*. Update CLI command documentation.
+*. Add CLI format command (mpremote).
+*. Add --directory option to CLI export command.
+*. Add CLI transfer command (mpremote).
+*. Add extra unit tests.
 
 ## Introduction
 
@@ -27,30 +27,30 @@ This CLI expects a 'flat' or 'src' layout in order to identify project paths. A 
 
 ### Flat Layout Example
 
-    ```text
-    project-name
-    ├── .picoproject     <-- Optional CLI root directory marker & config
-    ├── project_name
-    │   ├── lib          <-- CLI install command requires a 'lib' directory
-    │   └── main.py
-    ├── LICENSE
-    ├── pyproject.toml
-    └── README.md
-    ```
+```text
+project-name
+├── .picoproject     <-- Optional CLI root directory marker & config
+├── project_name
+│   ├── lib          <-- CLI install command requires a 'lib' directory
+│   └── main.py
+├── LICENSE
+├── pyproject.toml
+└── README.md
+```
 
 ### Src Layout Example
 
-    ```text
-    project-name
-    ├── .picoproject      <-- Optional CLI root directory marker & config
-    ├── src
-    │   └── project_name
-    │       ├── lib       <-- CLI install command requires a 'lib' directory
-    │       └── main.py
-    ├── LICENSE
-    ├── pyproject.toml
-    └── README.md
-    ```
+```text
+project-name
+├── .picoproject      <-- Optional CLI root directory marker & config
+├── src
+│   └── project_name
+│       ├── lib       <-- CLI install command requires a 'lib' directory
+│       └── main.py
+├── LICENSE
+├── pyproject.toml
+└── README.md
+```
 
 >[!TIP]
 > LICENSE, pyproject.toml & README.md are used as project root markers
@@ -60,33 +60,33 @@ This CLI expects a 'flat' or 'src' layout in order to identify project paths. A 
 
 Activate your project virtual environment:
 
-    ```sh
-    source .venv/bin/activate
-    ```
+```bash
+source .venv/bin/activate
+```
 
 If installing with pip instead of uv:
 
-    ```sh
-    (project) python -m pip install git+https://github.com/andyrids/picoproject.git
-    ```
+```bash
+(project) python -m pip install git+https://github.com/andyrids/picoproject.git
+```
 
 This project has defined a CLI script in the `[project.scripts]` table of pyproject.toml, resulting in the ability to run the CLI with the following command:
 
-    ```sh
-    (project) uv run CLI
-    ```
+```bash
+(project) uv run CLI
+```
 
 You can run the CLI as a module:
 
-    ```sh
-    (project) python -m picoproject.main
-    ```
+```bash
+(project) python -m picoproject.main
+```
 
 You can use the command 'CLI' in an activated .venv:
 
-    ```sh
-    (project) CLI
-    ```
+```bash
+(project) CLI
+```
 
 ## CLI Commands
 
@@ -100,9 +100,10 @@ The CLI navigates the MicroPython package index to install the chosen packages. 
 the project's local `lib/` directory instead of a microcontroller device. This facilitates IDE autocompletion
 and parsing of docstring information whilst developing locally.
 
-    ```sh
-    (project) CLI install --help
-    ```
+```bash
+(project) CLI install --help
+```
+
 ![CLI install --help](./docs/img/PICOPROJECT_INSTALL_HELP.png)
 
 >[!NOTE]
@@ -112,9 +113,10 @@ and parsing of docstring information whilst developing locally.
 
 It is possible to specify the install directory using the '--directory' option. The following command would install the `umqtt.simple` package to the current working directory:
 
-    ```sh
-    (project) CLI install umqtt.simple --directory .
-    ```
+```bash
+(project) CLI install umqtt.simple --directory .
+```
+
 ![CLI install](./docs/img/PICOPROJECT_INSTALL_DIR.png)
 
 If the project does not have a 'lib/' directory and a --directory option path is not specified, then the install command will fail. The error message will indicate a missing expected 'lib/' path in relation to the project's root directory.
@@ -123,15 +125,15 @@ If the project does not have a 'lib/' directory and a --directory option path is
 
 The CLI uses the `mpy-cross` package to compile Python to MicroPython precompiled binary (.mpy).
 
-    ```sh
-    (project) CLI compile --help
-    ```
+```bash
+(project) CLI compile --help
+```
 
 By default, all Python files will be compiled on issuing the CLI **compile** command:
 
-    ```sh
-    (project) CLI compile
-    ```
+```bash
+(project) CLI compile
+```
 
 ## CLI export
 
@@ -140,19 +142,27 @@ to this directory. By default all files are exported, but a precompiled only opt
 of only precompiled binary files (.mpy). Any Python files not previously precompiled are compiled and
 exported automatically.
 
-    ```sh
-    (project) CLI export --help
-    ```
+```bash
+(project) CLI export --help
+```
 
 To export all Python and MicroPython precompiled files, run the **export** command without the `--compiled-only`
 option.
 
-    ```sh
-    (project) CLI export
-    ```
+```bash
+(project) CLI export
+```
 
-Directory trees are displayed for the main project and export directories for comparison.
+Directory trees are displayed for the main project and the export target directory for comparison. Any project files
+that were not exported are highlighted in red/strikethrough.
 
-With the `--precompiled` option, the **export** command will only export precompiled Python files
-(.mpy) and will attempt to compile and export if no existing compiled version is found. The directory
-trees will highlight all files within the main project folder, which have not been exported.
+![CLI export](./docs/img/PICOPROJECT_EXPORT.png)
+
+With the **--precompiled** option, the **export** command will only export precompiled Python files
+and will attempt to compile and export if no existing compiled version is found. The directory
+trees and console output will highlight all files within the main project folder, which have not been exported.
+
+In the example image below, The **--precompiled** option is used and as none of the project files had been previously compiled, the compilation steps were carried out by the CLI **compile** command. All compilation tasks were completed except for 'utils/project.py'. The exportation progress shows that export of Python files was skipped and highlights the compilation error for the aforementioned file. As the compilation failed, the Python version of the file 'utils/project.py' was exported. The red/strikethrough for this file in the exported files tree shows that
+a Python file was exported even though the **--precompiled** was set.
+
+![CLI export](./docs/img/PICOPROJECT_EXPORT_PRECOMPILED.png)
