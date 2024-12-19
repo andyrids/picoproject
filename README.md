@@ -5,11 +5,10 @@
 
 ## TODO
 
-*. Update CLI command documentation.
-*. Add CLI format command (mpremote).
-*. Add --directory option to CLI export command.
-*. Add CLI transfer command (mpremote).
-*. Add extra unit tests.
+* Add CLI format command (mpremote).
+* Add --directory option to CLI export command.
+* Add CLI transfer command (mpremote).
+* Add extra unit tests.
 
 ## Introduction
 
