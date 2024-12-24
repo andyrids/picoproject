@@ -15,5 +15,9 @@
     "export": {
         "no_args_is_help": false,
         "rich_help_panel": "Distribution"
+    },
+    "format": {
+        "no_args_is_help": false,
+        "rich_help_panel": "Microcontroller"
     }
 }
