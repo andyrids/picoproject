@@ -62,11 +62,11 @@ class ProgressColour(Highlighter):
         regex_styles = (
             (
                 r"(?P<status>(Compiling|Exporting|Installing|Formatting).+)",
-                "magenta"
+                "magenta",
             ),
             (
                 r"(?P<status>(Compiled|Exported|Installed|Formatted).+)",
-                "bright_green"
+                "bright_green",
             ),
             (r"(?P<status>Error.+)", "bright_red"),
         )
