@@ -188,7 +188,7 @@ def export(
             help="Only [b green]export[/b green] precompiled code.",
         ),
     ] = None,
-):
+) -> list[Task]:
     """[b green]Export[/b green] project files for distribution."""
 
     project = ProjectPath()
@@ -212,7 +212,6 @@ def export(
         except FileExistsError:
             pass
 
-        cpython_file = operator.methodcaller("match", "*.pyc")
         python_file = operator.methodcaller("match", "*.py")
         micropython_version = operator.methodcaller("with_suffix", ".mpy")
 
@@ -292,6 +291,53 @@ def export(
 
     # for PyTest functions
     return command.tasks
+
+
+@app.command("format", **config["format"])
+def format_pico():
+    """[b red]Format[/b red] microcontroller filesystem."""
+
+    config_mpremote = config_file.parent / "mpremote.json"
+    instructions = json.loads(config_mpremote.read_bytes())
+
+    with contextlib.ExitStack() as cm:
+        update_commands = False
+        if progress_display.is_started:
+            commands_id, *_ = commands.task_ids
+        else:
+            progress_panel.title = "[b]Format Progress"
+            cm.enter_context(progress_display)
+            commands_id = commands.add_task("", total=1)
+            commands.start_task(commands_id)
+            update_commands = True
+            map(command.remove_task, command.task_ids)
+
+        try:
+            command_id = command.add_task("Formatting", item="", total=1)
+
+            args = ("mpremote", "exec", "--no-follow", instructions["format"])
+            result = subprocess.run(
+                args,
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+        except subprocess.CalledProcessError as e:
+            mpremote_msg = e.stderr.strip("\n")
+            commands.console.log(f"[b red]Format error - {mpremote_msg}")
+            command.update(command_id, description="Error")
+        else:
+            command.update(command_id, description="Formatted", advance=1)
+            commands.update(commands_id, advance=update_commands)
+        # before end of try
+        finally:
+            command.stop_task(command_id)
+
+        # hide successful tasks
+        for task in filter(operator.attrgetter("finished"), command.tasks):
+            command.update(task.id, visible=False)
+        # for PyTest functions
+        return command.tasks
 
 
 if __name__ == "__main__":
