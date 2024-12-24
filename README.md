@@ -5,10 +5,10 @@
 
 ## TODO
 
-* Add CLI format command (mpremote).
+* ~~Add CLI format command (mpremote).~~
 * Add **--directory** option to CLI export command.
 * Add CLI transfer command (mpremote).
-* Add extra unit tests.
+* Add [tool.picoproject] pyproject.toml command configuration.
 
 ## Introduction
 
@@ -17,6 +17,7 @@ This package was designed to facilitate MicroPython project management for the R
 1. Compilation of project files to MicroPython binary (.mpy).
 2. Installation of MicroPython packages into a projects local `lib/` directory.
 3. Export of project files for distribution to a Pico device.
+4. Formatting connected Pico device filesystem.
 
 By installing packages locally, an IDE can highlight parameters/docstrings of imported modules. The CLI compile command can compile these packages along with your project files to MicroPython binary files (optional) and export them ready for distribution to a connected Pico device.
 
