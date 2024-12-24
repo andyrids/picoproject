@@ -165,3 +165,24 @@ In the example image below, The **--precompiled** option is used and as none of 
 a Python file was exported even though the **--precompiled** was set.
 
 ![CLI export](./docs/img/PICOPROJECT_EXPORT_PRECOMPILED.png)
+
+## CLI format
+
+This command formats the entire filesystem of the connected Pico. It uses mpremote to execute the following MicroPython script on the connected device:
+
+```python
+import os, machine, rp2
+
+os.umount('/')
+bdev = rp2.Flash()
+os.VfsLfs2.mkfs(bdev, progsize=256)
+vfs = os.VfsLfs2(bdev, progsize=256)
+os.mount(vfs, '/')
+machine.reset()
+```
+
+A manual example using mpremote is shown below:
+
+```bash
+(project) mpremote exec --no-follow "import os, machine, rp2; os.umount('/'); bdev = rp2.Flash(); os.VfsLfs2.mkfs(bdev, progsize=256); vfs = os.VfsLfs2(bdev, progsize=256); os.mount(vfs, '/'); machine.reset()"
+```
